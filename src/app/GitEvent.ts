@@ -9,11 +9,21 @@ export class GitEvent {
   public title:string;
   private members: Array<string>;
   public meetingDate: any;
-
+  public $key : string;
   constructor(){
     this.setEvent('','',[]);
   }
 
+  static fromData(obj: any)
+  {
+    let e = new GitEvent();
+    e.title = obj.title;
+    e.meetingDate = obj.meetingDate;
+    e.$key = obj.$key;
+    e.members = obj.members;
+    e.description = obj.description;
+    return e;
+  }
 
   public setEvent(description:string, title:string, members: Array<string>) {
 
@@ -40,6 +50,14 @@ export class GitEvent {
 
   public getMembers(): Array<string> {
     return this.members;
+  }
+
+  public getStartingDate() : Date {
+    return new Date(this.meetingDate.year, this.meetingDate.month, this.meetingDate.day, this.meetingDate.startingHour)
+  }
+
+  public getEndingDate() : Date {
+    return new Date(this.meetingDate.year, this.meetingDate.month, this.meetingDate.day, this.meetingDate.endingHour)
   }
 
 
